@@ -1,0 +1,28 @@
+{
+  "name": "Late Fee Calculator",
+  "description": "One-click late-fee calculator with editable schedule.",
+  "version": "2.1",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "scripting", "storage"],
+  "icons": {
+    "16": "star.png",
+    "48": "star.png",
+    "128": "star.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "star.png",
+      "48": "star.png",
+      "128": "star.png"
+    }
+  },
+"web_accessible_resources": [{
+  "resources": ["videos/*", "videos/videos.json"],
+  "matches": ["<all_urls>"]
+}],
+  "host_permissions": [
+    "https://www.googleapis.com/*",
+    "https://drive.google.com/*"
+  ]
+}
