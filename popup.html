@@ -8,136 +8,91 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ------------ color & glass vars ------------ */
+    /* ---- colours & glass ---- */
     :root{
-      --bg-start:#0a1d3d;
-      --bg-mid:#01306e;
-      --bg-end:#015fce;
+      --bg-start:#0a1d3d;--bg-mid:#01306e;--bg-end:#015fce;
       --accent:#4F8BFF;
-
       --glass-bg:rgba(255,255,255,.07);
       --glass-border:rgba(255,255,255,.35);
       --glass-shadow:0 8px 30px rgba(0,0,0,.35);
       --radius:22px;
     }
     *{box-sizing:border-box;margin:0}
-
-    /* ------------ page layout ------------ */
     html,body{
       width:100%;height:100%;
       font:15px/1.55 "Inter",sans-serif;
       color:#f1f5f9;
       background:linear-gradient(135deg,var(--bg-start),var(--bg-mid) 55%,var(--bg-end));
     }
-    body{
-      display:flex;flex-direction:column;align-items:center;
-      padding:24px;min-width:480px;overflow-y:auto;
-    }
+    body{display:flex;flex-direction:column;align-items:center;
+         padding:24px;min-width:480px;overflow-y:auto}
 
-    /* ------------ tabs ------------ */
+    /* ---- tabs ---- */
     .tabs{display:flex;gap:10px;margin-bottom:20px}
-    .tab{
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.28);
-      border-radius:12px;
-      padding:10px 20px;
-      cursor:pointer;
-    }
+    .tab{background:rgba(255,255,255,.08);
+         border:1px solid rgba(255,255,255,.28);
+         border-radius:12px;padding:10px 20px;cursor:pointer}
     .tab.active{background:var(--accent)}
     .content-section{display:none;width:100%}
     .content-section.active{display:block}
 
-    /* ------------ glass card ------------ */
+    /* ---- glass card ---- */
     .glass{
-      width:100%;max-width:480px;
+      width:100%;max-width:520px;
       background:var(--glass-bg);
       border:1px solid var(--glass-border);
       border-radius:var(--radius);
       box-shadow:var(--glass-shadow);
       backdrop-filter:blur(20px) saturate(120%);
       padding:28px 26px 34px;
+      margin-bottom:16px;
     }
 
-    /* ------------ common buttons / inputs ------------ */
+    /* ---- inputs / buttons ---- */
     .glass-btn,
     input[type="text"],
     input[type="number"],
-    input[type="datetime-local"]{
-      width:100%;
-      padding:12px;
-      margin-top:10px;
-      font-size:1rem;
-      border-radius:12px;
-      border:none;
+    input[type="datetime-local"],
+    select{
+      width:100%;padding:12px;margin-top:10px;
+      font-size:1rem;border-radius:12px;border:none;
     }
     .glass-btn{
       background:#fff;color:#000;cursor:pointer;
       transition:transform .1s ease,background-color .3s;
       box-shadow:0 2px 6px rgba(0,0,0,.25);
     }
+    .glass-btn:disabled{opacity:.5;cursor:not-allowed}
     .glass-btn:active{transform:scale(.97);background:#e0e0e0}
 
-    /* ------------ autocomplete & suggestions ------------ */
-    #autocompleteList,
-    #suggestions,
-    #debugItems{
-      position:relative;
-      z-index:1000;
+    /* ---- autocomplete / suggestions ---- */
+    #autocompleteList,#suggestions{
+      position:relative;z-index:1000;
       background:rgba(255,255,255,.15);
       backdrop-filter:blur(10px);
-      border-radius:10px;
-      margin-top:5px;
+      border-radius:10px;margin-top:5px;
       font-size:.85rem;
-      white-space:pre-wrap;
     }
-    #autocompleteList div,
-    #suggestions div{
-      padding:8px;cursor:pointer;
-    }
-    #autocompleteList div:hover,
-    #suggestions div:hover{
-      background:rgba(255,255,255,.2)
-    }
+    #autocompleteList div,#suggestions div{padding:8px;cursor:pointer;}
+    #autocompleteList div:hover,#suggestions div:hover{background:rgba(255,255,255,.2)}
     #suggestions div::before{content:"💡 ";}
 
-    /* ------------ video player ------------ */
+    /* ---- video ---- */
     video{margin-top:20px;width:100%;border-radius:12px}
-    #fsBtn{display:none;margin-top:8px}
 
-    /* ------------ late-fee display ------------ */
-    #result{
-      font-size:2rem;
-      font-weight:bold;
-      color:#fff;
-      margin-top:16px;
-    }
-
-    /* ------------ details arrow ------------ */
-    details summary{
-      font-size:.9rem;cursor:pointer;list-style:none;
-      position:relative;padding-left:18px;margin-bottom:8px;
-    }
-    details summary::-webkit-details-marker{display:none}
-    details summary::before{
-      content:"▸";
-      position:absolute;left:0;top:0;
-      transition:transform .3s;
-    }
-    details[open] summary::before{transform:rotate(90deg)}
-    details{margin-top:18px}
+    /* ---- late fee headline ---- */
+    #result{font-size:2rem;font-weight:bold;color:#fff;margin-top:16px}
   </style>
 </head>
 <body>
 
-  <!-- ------------ tab bar ------------ -->
+  <!-- tabs -->
   <div class="tabs">
     <div class="tab active" data-tab="calcTab">Late Fee Calculator</div>
     <div class="tab" data-tab="videoTab">Video Search</div>
   </div>
 
-  <!-- ====================================================== -->
-  <!-- ===============  LATE-FEE CALCULATOR  ================ -->
-  <!-- ====================================================== -->
+  <!-- ============= LATE-FEE CALCULATOR ============= -->
   <div id="calcTab" class="content-section active">
     <div class="glass">
       <h1>S.T.A.R Lab<br>Official Late-Fee Calculator</h1>
@@ -152,9 +107,7 @@
           <input type="number" id="rate" min="1" step="1">
         </label>
 
-        <label>
-          <input type="checkbox" id="manualChk"> Manual mode
-        </label>
+        <label><input type="checkbox" id="manualChk"> Manual mode</label>
 
         <div id="manualInputs">
           <label>Scheduled End
@@ -166,12 +119,7 @@
         </div>
 
         <table id="sched" style="width:100%;margin-top:12px;font-size:.85rem;border-collapse:collapse">
-          <thead>
-            <tr style="text-align:left">
-              <th style="width:60px">Day</th>
-              <th>Closed</th><th>Open</th><th>Close</th>
-            </tr>
-          </thead>
+          <thead><tr style="text-align:left"><th style="width:60px">Day</th><th>Closed</th><th>Open</th><th>Close</th></tr></thead>
           <tbody></tbody>
         </table>
 
@@ -181,9 +129,7 @@
     </div>
   </div>
 
-  <!-- ====================================================== -->
-  <!-- ==================  VIDEO SEARCH  ==================== -->
-  <!-- ====================================================== -->
+  <!-- ====================  VIDEO SEARCH  =================== -->
   <div id="videoTab" class="content-section">
     <div class="glass">
       <h1>Video Search</h1>
@@ -194,16 +140,10 @@
 
       <button class="glass-btn" id="searchVideoBtn">Play Video</button>
       <video id="videoPlayer" controls style="display:none;"></video>
-      <button class="glass-btn" id="fsBtn">Open in Fullscreen Tab</button>
-
-      <details style="margin-top:18px">
-        <summary>Checked-out items (debug)</summary>
-        <div id="debugItems"></div>
-      </details>
     </div>
   </div>
 
-  <!-- main logic -->
+  <!-- logic -->
   <script src="popup.js"></script>
 </body>
 </html>

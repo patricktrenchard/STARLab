@@ -1,28 +1,47 @@
 {
-  "name": "Late Fee Calculator",
-  "description": "One-click late-fee calculator with editable schedule.",
-  "version": "2.1",
   "manifest_version": 3,
-  "permissions": ["activeTab", "scripting", "storage"],
-  "icons": {
-    "16": "star.png",
-    "48": "star.png",
-    "128": "star.png"
-  },
+  "name": "S.T.A.R Lab Tools",
+  "description": "Late Fee Calculator, Training Video Search, and Signature Capture/Stamping.",
+  "version": "2.0.0",
+
   "action": {
     "default_popup": "popup.html",
-    "default_icon": {
-      "16": "star.png",
-      "48": "star.png",
-      "128": "star.png"
-    }
+    "default_title": "S.T.A.R Lab Tools"
   },
-"web_accessible_resources": [{
-  "resources": ["videos/*", "videos/videos.json"],
-  "matches": ["<all_urls>"]
-}],
+
+  "permissions": [
+    "storage",
+    "scripting",
+    "activeTab",
+    "tabs",
+    "nativeMessaging"
+  ],
+
   "host_permissions": [
-    "https://www.googleapis.com/*",
-    "https://drive.google.com/*"
-  ]
+    "<all_urls>",
+    "https://www.googleapis.com/*"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.js",
+        "secret.json",
+        "signPad.html",
+        "signPad.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "icons": {
+    "16":  "star.png",
+    "32":  "star.png",
+    "48":  "star.png",
+    "128": "star.png"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }
