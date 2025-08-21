@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ---- colours & glass ---- */
     :root{
       --bg-start:#0a1d3d;--bg-mid:#01306e;--bg-end:#015fce;
       --accent:#4F8BFF;
@@ -27,7 +26,7 @@
     body{display:flex;flex-direction:column;align-items:center;
          padding:24px;min-width:480px;overflow-y:auto}
 
-    /* ---- tabs ---- */
+    /* tabs */
     .tabs{display:flex;gap:10px;margin-bottom:20px}
     .tab{background:rgba(255,255,255,.08);
          border:1px solid rgba(255,255,255,.28);
@@ -36,7 +35,7 @@
     .content-section{display:none;width:100%}
     .content-section.active{display:block}
 
-    /* ---- glass card ---- */
+    /* cards */
     .glass{
       width:100%;max-width:520px;
       background:var(--glass-bg);
@@ -48,7 +47,7 @@
       margin-bottom:16px;
     }
 
-    /* ---- inputs / buttons ---- */
+    /* inputs / buttons */
     .glass-btn,
     input[type="text"],
     input[type="number"],
@@ -65,7 +64,6 @@
     .glass-btn:disabled{opacity:.5;cursor:not-allowed}
     .glass-btn:active{transform:scale(.97);background:#e0e0e0}
 
-    /* ---- autocomplete / suggestions ---- */
     #autocompleteList,#suggestions{
       position:relative;z-index:1000;
       background:rgba(255,255,255,.15);
@@ -77,11 +75,32 @@
     #autocompleteList div:hover,#suggestions div:hover{background:rgba(255,255,255,.2)}
     #suggestions div::before{content:"💡 ";}
 
-    /* ---- video ---- */
     video{margin-top:20px;width:100%;border-radius:12px}
-
-    /* ---- late fee headline ---- */
     #result{font-size:2rem;font-weight:bold;color:#fff;margin-top:16px}
+
+    /* estimate box */
+    .row{display:flex;gap:10px;align-items:center}
+    .row > *{flex:1}
+    small.muted{opacity:.85}
+    .hidden{display:none}
+    .warn{color:#ffe082;font-weight:600;margin-top:8px}
+    .pill{
+      display:inline-block;padding:6px 10px;border-radius:999px;
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);
+      font-size:.85rem;margin-top:6px
+    }
+
+    /* docs links */
+    .doc-links ul{list-style:none;padding:0;margin:10px 0 0}
+    .doc-links li{margin:10px 0}
+    .doc-links a{
+      color:#fff;text-decoration:none;
+      padding:10px 12px;border-radius:10px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.28);
+      display:inline-block
+    }
+    .doc-links a:hover{background:rgba(255,255,255,.15)}
   </style>
 </head>
 <body>
@@ -90,9 +109,10 @@
   <div class="tabs">
     <div class="tab active" data-tab="calcTab">Late Fee Calculator</div>
     <div class="tab" data-tab="videoTab">Video Search</div>
+    <div class="tab" data-tab="docsTab">Important Docs</div>
   </div>
 
-  <!-- ============= LATE-FEE CALCULATOR ============= -->
+  <!-- LATE-FEE CALCULATOR -->
   <div id="calcTab" class="content-section active">
     <div class="glass">
       <h1>S.T.A.R Lab<br>Official Late-Fee Calculator</h1>
@@ -100,7 +120,19 @@
       <button class="glass-btn" id="calc">Calculate Late Fee</button>
       <div id="result"></div>
 
-      <details>
+      <!-- NEW: Estimate panel (shows if Actual End missing or on demand) -->
+      <div id="estimateBox" class="hidden" style="margin-top:14px">
+        <div class="warn">⚠️ Actual return time not found. Estimate as of a time below.</div>
+        <div class="pill" id="dueBadge">Due: —</div>
+        <div class="row">
+          <input type="datetime-local" id="asOfInput" aria-label="As-of time">
+          <button class="glass-btn" id="useNowBtn" type="button">Use current time</button>
+        </div>
+        <button class="glass-btn" id="estimateBtn" type="button" style="margin-top:10px">Estimate Fee</button>
+        <small class="muted">Tip: You can always open this panel by turning on “Manual mode” below.</small>
+      </div>
+
+      <details style="margin-top:16px">
         <summary>Advanced settings</summary>
 
         <label>Hourly rate ($)
@@ -113,7 +145,7 @@
           <label>Scheduled End
             <input type="datetime-local" id="manualDue">
           </label>
-          <label>Actual End
+          <label>Actual/As-of Time
             <input type="datetime-local" id="manualRet">
           </label>
         </div>
@@ -129,7 +161,7 @@
     </div>
   </div>
 
-  <!-- ====================  VIDEO SEARCH  =================== -->
+  <!-- VIDEO SEARCH -->
   <div id="videoTab" class="content-section">
     <div class="glass">
       <h1>Video Search</h1>
@@ -143,7 +175,25 @@
     </div>
   </div>
 
-  <!-- logic -->
+  <!-- IMPORTANT DOCS -->
+  <div id="docsTab" class="content-section">
+    <div class="glass doc-links">
+      <h1>Important Documents</h1>
+      <ul>
+        <li>
+          <a href="https://docs.google.com/document/d/114RBs2_FNBp0m0Z3-JEfPFbeDjh5viblYlN8iMTjXbc/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+            📄 S.T.A.R Supernova
+          </a>
+        </li>
+        <li>
+          <a href="https://docs.google.com/document/d/1605-aakXA1yGwwoFmfkMkqXYUoHJB7_ceXZ3gmsj9rU/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+            📄 S.T.A.R Equipment Supernova
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <script src="popup.js"></script>
 </body>
 </html>
